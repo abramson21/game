@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace game
 {
-    class BaseObject
+    abstract class BaseObject : ICollision
     {
         protected Point Pos;
 
@@ -15,18 +15,21 @@ namespace game
 
         protected Size Size;
 
-        public BaseObject(Point pos, Point dir, Size size)
+        protected BaseObject(Point pos, Point dir, Size size)
         {
             Pos = pos;
             Dir = dir;
             Size = size;
         }
 
-        public virtual void Draw()
+        public Rectangle Rect => new Rectangle(Pos, Size);
+
+        public bool Collision(ICollision obj)
         {
-            
-            Game.Buffer.Graphics.DrawEllipse(Pens.White, Pos.X, Pos.Y, Size.Width, Size.Height);
+            return obj.Rect.IntersectsWith(this.Rect);
         }
+
+        public abstract void Draw();
 
         public virtual void Update()
         {

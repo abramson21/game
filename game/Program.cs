@@ -14,14 +14,16 @@ namespace game
         [STAThread]
         static void Main()
         {
-            Form form = new Form();
+            Form form = new Form
+            {
+                Width = Screen.PrimaryScreen.Bounds.Width,
+                Height = Screen.PrimaryScreen.Bounds.Height
+            };
 
-            form.Width = 800;
-            form.Height = 600;
             Game.Init(form);
-
+            form.Show();
+            Game.Load();
             Game.Draw();
-
             Application.Run(form);
         }
     }

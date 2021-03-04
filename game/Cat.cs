@@ -7,28 +7,30 @@ using System.Threading.Tasks;
 
 namespace game
 {
-    class Star : BaseObject
-    {
-        public Star(Point pos, Point dir, Size size) : base(pos, dir, size)
+    class Cat : BaseObject
+    {/*= "../../cat"*/
+        private readonly string file = "../../icon.png";
+
+        public Cat(Point pos, Point dir, Size size) : base(pos, dir, size)
         {
 
         }
 
         public override void Draw()
         {
-            Game.Buffer.Graphics.DrawLine(Pens.AliceBlue, Pos.X, Pos.Y, Pos.X + Size.Width, Pos.Y + Size.Height);
-            Game.Buffer.Graphics.DrawLine(Pens.MediumVioletRed, Pos.X + Size.Width, Pos.Y, Pos.X, Pos.Y + Size.Height);
+            Bitmap cat = new Bitmap(file);
+            Game.Buffer.Graphics.DrawImage(cat, Pos.X, Pos.Y);
         }
 
         public override void Update()
         {
             Pos.X = Pos.X + Dir.X;
-            if (Pos.X < 0) Pos.X = Game.Width;
+            Pos.Y = Pos.Y + Dir.Y;
 
             if (Pos.X > Game.Width) Dir.X = -Dir.X;
+            if (Pos.X < 0) Dir.X = -Dir.X;
             if (Pos.Y > Game.Height) Dir.Y = -Dir.Y;
-            if (Pos.Y < 0)  Dir.Y = -Dir.Y;
-
+            if (Pos.Y < 0) Pos.Y = Dir.Y = -Dir.Y;
         }
     }
 }
